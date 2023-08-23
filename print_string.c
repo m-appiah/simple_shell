@@ -37,13 +37,16 @@ char *_getenv(char *name)
 {
 	int i = 0;
 	char *value;
+	char *en;
 
 	while (environ[i])
 	{
-		value = strtok(environ[i], "=");
+		en = strdup(environ[i]);
+		value = strtok(en, "=");
 		if (_strcmp(value, name) == 0)
 			return (strtok(NULL, "="));
 		i++;
+		free(en);
 	}
 	return (NULL);
 }

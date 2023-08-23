@@ -83,18 +83,19 @@ void execute_command(char **argv)
 	pid_t pid;
 	int status, i;
 
-	if (_strcmp(argv[0], "#") == 0)
-	{
-		for (i = 0; argv[i] != NULL; i++)
-			free(argv[i]);
-		exit(0);
-	}
-	if (_strcmp(argv[0], "exit") == 0)
-	{
-		for (i = 0; argv[i] != NULL; i++)
-			free(argv[i]);
-		exit(0);
-	}
+		if (_strcmp(argv[0], "#") == 0)
+		{
+			for (i = 0; argv[i] != NULL; i++)
+				free(argv[i]);
+			exit(0);
+		}
+		if (_strcmp(argv[0], "exit") == 0)
+		{
+			for (i = 0; argv[i] != NULL; i++)
+				free(argv[i]);
+			exit(0);
+		}
+
 	pid = fork();
 	if (pid < 0)
 	{

@@ -2,19 +2,15 @@
 
 /**
  * main - program entry point
- * @argc: argumrnt count
- * @argv: argument vector
  *
  * Return: 0 (success)
  */
-int main(int argc, char **argv)
+int main(void)
 {
 	int num_tokens, i;
 	char *input;
 	char **argv_tokens;
 
-	(void)argc;
-	(void)argv;
 	for (;;)
 	{
 		_prompt();

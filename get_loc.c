@@ -51,6 +51,8 @@ char *get_location(char *command)
 		return (NULL);
 
 	path_copy = _strdup(path);
+	if (path == NULL)
+		free(path);
 	path_token = strtok(path_copy, ":");
 
 	while (path_token != NULL)
