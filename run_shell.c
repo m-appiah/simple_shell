@@ -25,7 +25,7 @@ char *read_input()
 	if (read_chars == -1)
 	{
 		free(input);
-		_putchar('\n');
+		/*_putchar('\n');*/
 		exit(0);
 	}
 	return (input);
@@ -81,7 +81,7 @@ char **tokenize_input(char *input, int *num_tokens)
 void execute_command(char **argv)
 {
 	pid_t pid;
-	int status, i;
+	int status, i, e = 0;
 
 		if (_strcmp(argv[0], "#") == 0)
 		{
@@ -93,24 +93,27 @@ void execute_command(char **argv)
 		{
 			for (i = 0; argv[i] != NULL; i++)
 				free(argv[i]);
-			exit(0);
+			exit(e);
 		}
 
 	pid = fork();
 	if (pid < 0)
 	{
 		perror(argv[0]);
-		exit(1);
+		e = 127;
 	}
 	else if (pid == 0)
 	{
 		execmd(argv);
-		/*perror(argv[0]);*/
-		exit(1);
+		perror(argv[0]);
+		exit(2);
 	}
 	else
 	{
 		wait(&status);
+		if (WIFEXITED(status))
+		{
+			e = WEXITSTATUS(status);
+		}
 	}
 }
-
