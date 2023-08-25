@@ -20,6 +20,7 @@ char *read_input()
 	char *input = NULL;
 	size_t n = 0;
 	ssize_t read_chars;
+	int i = 0;
 
 	read_chars = getline(&input, &n, stdin);
 	if (read_chars == -1)
@@ -27,6 +28,17 @@ char *read_input()
 		free(input);
 		/*_putchar('\n');*/
 		exit(0);
+	}
+	while (input[i])
+	{
+		if (i > 0 && input[i] == '#' && input[i - 1] != ' ')
+			break;
+		if (input[i] == '#')
+		{
+			input[i] = '\0';
+			break;
+		}
+		i++;
 	}
 	return (input);
 }
@@ -46,6 +58,7 @@ char **tokenize_input(char *input, int *num_tokens)
 	input_copy = _strdup(input);
 	if (input_copy == NULL)
 	{
+		free(input);
 		perror("Error: ");
 		exit(1);
 	}
@@ -60,7 +73,11 @@ char **tokenize_input(char *input, int *num_tokens)
 	(*num_tokens)++;
 
 	argv = malloc(sizeof(char *) * (*num_tokens));
-
+	if (argv == NULL)
+	{
+		perror("Error:");
+		exit(1);
+	}
 	token = strtok(input_copy, delim);
 	for (i = 0; token != NULL; i++)
 	{
@@ -72,6 +89,7 @@ char **tokenize_input(char *input, int *num_tokens)
 	free(input_copy);
 	return (argv);
 }
+
 /**
  * execute_command - function to execute command
  * @argv: command argument
@@ -81,20 +99,20 @@ char **tokenize_input(char *input, int *num_tokens)
 void execute_command(char **argv)
 {
 	pid_t pid;
-	int status, i, e = 0;
+	int status, i, e = 2;
 
-		if (_strcmp(argv[0], "#") == 0)
-		{
-			for (i = 0; argv[i] != NULL; i++)
-				free(argv[i]);
-			exit(0);
-		}
-		if (_strcmp(argv[0], "exit") == 0)
-		{
-			for (i = 0; argv[i] != NULL; i++)
-				free(argv[i]);
-			exit(e);
-		}
+	if (_strcmp(argv[0], "#") == 0)
+	{
+		for (i = 0; argv[i] != NULL; i++)
+			free(argv[i]);
+		exit(0);
+	}
+	if (_strcmp(argv[0], "exit") == 0)
+	{
+		for (i = 0; argv[i] != NULL; i++)
+			free(argv[i]);
+		exit(e);
+	}
 
 	pid = fork();
 	if (pid < 0)

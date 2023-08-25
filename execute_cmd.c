@@ -19,6 +19,5 @@ void execmd(char **argv)
 		execute_cmd = execve(actual_cmd, argv, environ);
 		if (execute_cmd == -1)
 			perror(argv[0]);
-
 	}
 }

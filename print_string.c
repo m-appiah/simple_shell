@@ -48,5 +48,6 @@ char *_getenv(char *name)
 		i++;
 		free(en);
 	}
+	free(en);
 	return (NULL);
 }

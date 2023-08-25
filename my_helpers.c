@@ -110,7 +110,7 @@ char *_strdup(char *str)
 	for (i = 0; str[i] != '\0'; i++)
 		;
 
-	cpy_str = malloc(i * sizeof(*cpy_str) + 1);
+	cpy_str = malloc((i + 1) * sizeof(*cpy_str));
 
 	if (cpy_str == NULL)
 	{
