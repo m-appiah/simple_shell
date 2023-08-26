@@ -7,18 +7,22 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <errno.h>
 #include <sys/wait.h>
 
 extern char **environ;
+extern int count;
 
 void _prompt(void);
 char *read_input();
+int builtins(char **argv_tokens);
 char *search_directory(char *directory, char *command);
 char **tokenize_input(char *input, int *num_tokens);
-void execute_command(char **argv);
+void execute_command(char **argv, char **prog);
 int _putchar(char c);
-int _printstr(char *str);
-void execmd(char **argv);
+void error_msg(char *prog, int count, char *cmd);
+void _puts(char *str);
+void execmd(char **argv, char **prog);
 char *get_location(char *command);
 void print_env(char **environ);
 char *_strcat(char *dest, char *src);

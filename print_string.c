@@ -12,20 +12,38 @@ int _putchar(char c)
 	return (write(1, &c, 1));
 }
 /**
- * _printstr - function to print strings
- * @str: strings to be printed
+ * error_msg - Prints custom erro message to standard error
+ * @prog: Program name
+ * @count: Command count
+ * @cmd: Command entered by user
  *
- * Return: number of strings
+ * Return: Void
  */
-int _printstr(char *str)
-{
-	int i = 0, count = 0;
 
-	while (str[i])
+void error_msg(char *prog, int count, char *cmd)
+{
+	_puts(prog);
+	_puts(": ");
+	_putchar(count);
+	_puts(": ");
+	_puts(cmd);
+	_puts(": not found\n");
+}
+
+/**
+ * _puts - prints a given string
+ * @str: String to be printed
+ *
+ * Return: Void
+ */
+
+void _puts(char *str)
+{
+	while (*str != '\0')
 	{
-		count += _putchar(str[i++]);
+		_putchar(*str);
+		str++;
 	}
-	return (count);
 }
 /**
  * _getenv - function to get the env

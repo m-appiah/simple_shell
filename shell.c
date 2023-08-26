@@ -2,17 +2,22 @@
 
 /**
  * main - program entry point
+ * @argc: argument counter
+ * @prog: program name
  *
  * Return: 0 (success)
  */
-int main(void)
+int main(int argc, char **prog)
 {
-	int num_tokens, i;
+	int num_tokens, i, count;
 	char *input;
 	char **argv_tokens;
 
+	(void)argc;
+
 	for (;;)
 	{
+		count++;
 		_prompt();
 		input = read_input();
 
@@ -31,7 +36,10 @@ int main(void)
 			input[_strlen(input) - 1] = '\0';
 
 		argv_tokens = tokenize_input(input, &num_tokens);
-		execute_command(argv_tokens);
+
+		if (builtins(argv_tokens) == 1)
+			continue;
+		execute_command(argv_tokens, prog);
 
 		for (i = 0; argv_tokens[i] != NULL; i++)
 		{

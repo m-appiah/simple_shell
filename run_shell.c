@@ -58,7 +58,7 @@ char **tokenize_input(char *input, int *num_tokens)
 	input_copy = _strdup(input);
 	if (input_copy == NULL)
 	{
-		free(input);
+
 		perror("Error: ");
 		exit(1);
 	}
@@ -76,6 +76,7 @@ char **tokenize_input(char *input, int *num_tokens)
 	if (argv == NULL)
 	{
 		perror("Error:");
+		free(argv);
 		exit(1);
 	}
 	token = strtok(input_copy, delim);
@@ -93,15 +94,17 @@ char **tokenize_input(char *input, int *num_tokens)
 /**
  * execute_command - function to execute command
  * @argv: command argument
+ * @prog: program name
  *
  * Return: void
  */
-void execute_command(char **argv)
+void execute_command(char **argv, char **prog)
 {
 	pid_t pid;
-	int status, i, e = 2;
+	int status;
 
-	if (_strcmp(argv[0], "#") == 0)
+	/**
+	 * if (_strcmp(argv[0], "#") == 0)
 	{
 		for (i = 0; argv[i] != NULL; i++)
 			free(argv[i]);
@@ -113,25 +116,23 @@ void execute_command(char **argv)
 			free(argv[i]);
 		exit(e);
 	}
-
+	*/
 	pid = fork();
 	if (pid < 0)
 	{
 		perror(argv[0]);
-		e = 127;
+		exit(2);
 	}
 	else if (pid == 0)
 	{
-		execmd(argv);
-		perror(argv[0]);
-		exit(2);
+		execmd(argv, prog);
 	}
 	else
 	{
 		wait(&status);
 		if (WIFEXITED(status))
 		{
-			e = WEXITSTATUS(status);
+			status = WEXITSTATUS(status);
 		}
 	}
 }

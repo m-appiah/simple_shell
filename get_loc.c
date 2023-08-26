@@ -17,6 +17,7 @@ char *search_directory(char *directory, char *command)
 	if (file_path == NULL)
 	{
 		perror("Memory allocation fail");
+		free(file_path);
 		exit(1);
 	}
 
